@@ -14,3 +14,6 @@ A repository for muti-develop Final_Proj of Computer Graphics
 |7|shadow mapping|肖帅|no|
 |8|Display text|汤万鹏|no|
 |9|Document Edit|蔡梓桁|no|
+
+---
+walikrence
