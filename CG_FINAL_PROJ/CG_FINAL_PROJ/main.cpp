@@ -320,9 +320,9 @@ int main()
 			ModelShader.setMat4("view", view);
 
 			glm::mat4 model = glm::mat4(1.0f);
-			model = glm::translate(model, glm::vec3(0.7f, -1.05f, -1.0f));
+			model = glm::translate(model, glm::vec3(0.6f, -1.05f, -1.0f));
 			model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0, 1.0, 0.0));
-			model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+			model = glm::scale(model, glm::vec3(0.098f, 0.098f, 0.098f));
 			ModelShader.setMat4("model", model);
 			doorModel.Draw(ModelShader);
 		}
