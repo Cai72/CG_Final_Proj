@@ -16,6 +16,7 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 void processInput(GLFWwindow* window);
+void loadOurModel(Shader ModelShader);
 unsigned int loadTexture(const char* path);
 unsigned int loadCubemap(vector<std::string> faces);
 
@@ -33,6 +34,8 @@ bool firstMouse = true;
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
 
+// model
+
 int main()
 {
 	// glfw: initialize and configure
@@ -48,7 +51,7 @@ int main()
 
 	// glfw window creation
 	// --------------------
-	GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", NULL, NULL);
+	GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "FinalProject", NULL, NULL);
 	if (window == NULL)
 	{
 		std::cout << "Failed to create GLFW window" << std::endl;
@@ -78,6 +81,20 @@ int main()
 	// build and compile shaders
 	// -------------------------
 	Shader HouseShader("../shaders/6.1.skybox.vs", "../shaders/6.1.skybox.fs");
+	Shader ModelShader("../shaders/model_loading.vs", "../shaders/model_loading.fs");
+
+	Model bedModel("res/bed/Bed.obj");
+	Model chairModel("res/chair/HSM0002.obj");
+	Model girlModel("res/girl/Girl_in_sleepwear.obj");
+	Model bedsideModel("res/bedside/Bedside Table D.obj");
+	Model clockModel("res/clock/Clock_obj.obj");
+	Model tableModel("res/table/ModernDeskOBJ.obj");
+	Model doorModel("res/door/Door.obj");
+	Model imacModel("res/mac/imac.obj");
+	Model keyboardModel("res/keyboard/clavier_imac.obj");
+	Model mouseModel("res/mouse/mouse_imac.obj");
+	Model lightModel("res/light/lightbulbfinal.obj");
+	Model lampModel("res/lamp/Lamp.obj");
 
 	// set up vertex data (and buffer(s)) and configure vertex attributes
 	// ------------------------------------------------------------------
@@ -176,6 +193,7 @@ int main()
 		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+
 		// render normal objects
 		glm::mat4 model = glm::mat4(1.0f);
 		model = glm::scale(model, glm::vec3(0.2f));
@@ -195,6 +213,198 @@ int main()
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 		glBindVertexArray(0);
 		glDepthFunc(GL_LESS); // set depth function back to default
+
+		// draw all models
+
+		// draw bed model
+		{
+			ModelShader.use();
+			glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+			glm::mat4 view = camera.GetViewMatrix();
+			ModelShader.setMat4("projection", projection);
+			ModelShader.setMat4("view", view);
+
+			glm::mat4 model = glm::mat4(1.0f);
+			model = glm::translate(model, glm::vec3(-0.56f, -0.73f, -0.29f));
+			model = glm::scale(model, glm::vec3(0.4f, 0.4f, 0.4f));
+			ModelShader.setMat4("model", model);
+			bedModel.Draw(ModelShader);
+		}
+
+		// draw chair model
+		{
+			ModelShader.use();
+			glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+			glm::mat4 view = camera.GetViewMatrix();
+			ModelShader.setMat4("projection", projection);
+			ModelShader.setMat4("view", view);
+
+			glm::mat4 model = glm::mat4(1.0f);
+			model = glm::translate(model, glm::vec3(0.4f, -1.0f, 0.4f));
+			model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0, 1.0, 0.0));
+			model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(1.0, 0.0, 0.0));
+			model = glm::scale(model, glm::vec3(0.0055f, 0.0055f, 0.0055f));
+			ModelShader.setMat4("model", model);
+			chairModel.Draw(ModelShader);
+		}
+
+		// draw girl model
+		{
+			ModelShader.use();
+			glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+			glm::mat4 view = camera.GetViewMatrix();
+			ModelShader.setMat4("projection", projection);
+			ModelShader.setMat4("view", view);
+
+			glm::mat4 model = glm::mat4(1.0f);
+			model = glm::translate(model, glm::vec3(0.0f, -1.0f, 0.0f));
+			model = glm::scale(model, glm::vec3(0.007f, 0.007f, 0.007f));
+			ModelShader.setMat4("model", model);
+			girlModel.Draw(ModelShader);
+		}
+
+		// draw bedside model
+		{
+			ModelShader.use();
+			glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+			glm::mat4 view = camera.GetViewMatrix();
+			ModelShader.setMat4("projection", projection);
+			ModelShader.setMat4("view", view);
+
+			glm::mat4 model = glm::mat4(1.0f);
+			model = glm::translate(model, glm::vec3(-0.15f, -1.0f, -1.0f));
+			model = glm::scale(model, glm::vec3(0.01f, 0.01f, 0.01f));
+			ModelShader.setMat4("model", model);
+			bedsideModel.Draw(ModelShader);
+		}
+
+		// draw clock model
+		{
+			ModelShader.use();
+			glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+			glm::mat4 view = camera.GetViewMatrix();
+			ModelShader.setMat4("projection", projection);
+			ModelShader.setMat4("view", view);
+
+			glm::mat4 model = glm::mat4(1.0f);
+			model = glm::translate(model, glm::vec3(0.0f, 0.5f, -1.0f));
+			model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0, 1.0, 0.0));
+			model = glm::scale(model, glm::vec3(0.3f, 0.3f, 0.3f));
+			ModelShader.setMat4("model", model);
+			clockModel.Draw(ModelShader);
+		}
+
+		
+		// draw table model
+		{
+			ModelShader.use();
+			glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+			glm::mat4 view = camera.GetViewMatrix();
+			ModelShader.setMat4("projection", projection);
+			ModelShader.setMat4("view", view);
+
+			glm::mat4 model = glm::mat4(1.0f);
+			model = glm::translate(model, glm::vec3(0.85f, -1.0f, 0.55f));
+			model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0, 1.0, 0.0));
+			model = glm::scale(model, glm::vec3(0.014f, 0.014f, 0.014f));
+			ModelShader.setMat4("model", model);
+			tableModel.Draw(ModelShader);
+		}
+		
+		// draw door model
+		{
+			ModelShader.use();
+			glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+			glm::mat4 view = camera.GetViewMatrix();
+			ModelShader.setMat4("projection", projection);
+			ModelShader.setMat4("view", view);
+
+			glm::mat4 model = glm::mat4(1.0f);
+			model = glm::translate(model, glm::vec3(0.7f, -1.05f, -1.0f));
+			model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0, 1.0, 0.0));
+			model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+			ModelShader.setMat4("model", model);
+			doorModel.Draw(ModelShader);
+		}
+
+		// draw imac model
+		{
+			ModelShader.use();
+			glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+			glm::mat4 view = camera.GetViewMatrix();
+			ModelShader.setMat4("projection", projection);
+			ModelShader.setMat4("view", view);
+
+			glm::mat4 model = glm::mat4(1.0f);
+			model = glm::translate(model, glm::vec3(0.9f, -0.485f, 0.4f));
+			model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0, 1.0, 0.0));
+			model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
+			ModelShader.setMat4("model", model);
+			imacModel.Draw(ModelShader);
+		}
+
+		// draw keyboard model
+		{
+			ModelShader.use();
+			glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+			glm::mat4 view = camera.GetViewMatrix();
+			ModelShader.setMat4("projection", projection);
+			ModelShader.setMat4("view", view);
+
+			glm::mat4 model = glm::mat4(1.0f);
+			model = glm::translate(model, glm::vec3(0.66f, -0.515f, 0.22f));
+			model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0, 1.0, 0.0));
+			model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
+			ModelShader.setMat4("model", model);
+			keyboardModel.Draw(ModelShader);
+		}
+
+		// draw mouse model
+		{
+			ModelShader.use();
+			glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+			glm::mat4 view = camera.GetViewMatrix();
+			ModelShader.setMat4("projection", projection);
+			ModelShader.setMat4("view", view);
+
+			glm::mat4 model = glm::mat4(1.0f);
+			model = glm::translate(model, glm::vec3(0.75f, -0.555f, 0.55f));
+			model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0, 1.0, 0.0));
+			model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
+			ModelShader.setMat4("model", model);
+			mouseModel.Draw(ModelShader);
+		}
+
+		// draw light model
+		{
+			ModelShader.use();
+			glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+			glm::mat4 view = camera.GetViewMatrix();
+			ModelShader.setMat4("projection", projection);
+			ModelShader.setMat4("view", view);
+
+			glm::mat4 model = glm::mat4(1.0f);
+			model = glm::translate(model, glm::vec3(0.0f, 0.68f, 0.0f));
+			model = glm::scale(model, glm::vec3(0.002f, 0.002f, 0.002f));
+			ModelShader.setMat4("model", model);
+			lightModel.Draw(ModelShader);
+		}
+
+		// draw lamp model
+		{
+			ModelShader.use();
+			glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+			glm::mat4 view = camera.GetViewMatrix();
+			ModelShader.setMat4("projection", projection);
+			ModelShader.setMat4("view", view);
+
+			glm::mat4 model = glm::mat4(1.0f);
+			model = glm::translate(model, glm::vec3(0.08f, -0.628f, -0.8f));
+			model = glm::scale(model, glm::vec3(0.15f, 0.15f, 0.15f));
+			ModelShader.setMat4("model", model);
+			lampModel.Draw(ModelShader);
+		}
+
 
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 		// -------------------------------------------------------------------------------
@@ -347,4 +557,11 @@ unsigned int loadCubemap(vector<std::string> faces)
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_REPEAT);
 
 	return textureID;
+}
+
+
+
+void loadOurModel(Shader ModelShader) {
+
+	
 }
