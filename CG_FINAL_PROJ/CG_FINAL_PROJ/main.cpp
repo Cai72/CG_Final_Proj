@@ -34,8 +34,9 @@ bool firstMouse = true;
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
 
-// model
 
+// lighting
+glm::vec3 lightPos(0.0f, 0.8f, 0.0f);
 int main()
 {
 	// glfw: initialize and configure
@@ -85,6 +86,7 @@ int main()
 	// build and compile shaders
 	// -------------------------
 	Shader HouseShader("../shaders/6.1.skybox.vs", "../shaders/6.1.skybox.fs");
+	Shader lampShader("../shaders/2.1.lamp.vs", "../shaders/2.1.lamp.fs");
 	Shader ModelShader("../shaders/model_loading.vs", "../shaders/model_loading.fs");
 
 	Model bedModel("res/bed/Bed.obj");
@@ -105,47 +107,47 @@ int main()
 	
 	float HouseVertices[] = {
 		// positions          
-		-1.0f,  1.0f, -1.0f,
-		-1.0f, -1.0f, -1.0f,
-		 1.0f, -1.0f, -1.0f,
-		 1.0f, -1.0f, -1.0f,
-		 1.0f,  1.0f, -1.0f,
-		-1.0f,  1.0f, -1.0f,
+		-1.0f,  1.0f, -1.0f, 0.0f, 0.0f, 1.0f,
+		-1.0f, -1.0f, -1.0f, 0.0f, 0.0f, 1.0f,
+		 1.0f, -1.0f, -1.0f, 0.0f, 0.0f, 1.0f,
+		 1.0f, -1.0f, -1.0f, 0.0f, 0.0f, 1.0f,
+		 1.0f,  1.0f, -1.0f, 0.0f, 0.0f, 1.0f,
+		-1.0f,  1.0f, -1.0f, 0.0f, 0.0f, 1.0f,
 
-		-1.0f, -1.0f,  1.0f,
-		-1.0f, -1.0f, -1.0f,
-		-1.0f,  1.0f, -1.0f,
-		-1.0f,  1.0f, -1.0f,
-		-1.0f,  1.0f,  1.0f,
-		-1.0f, -1.0f,  1.0f,
+		-1.0f, -1.0f,  1.0f, 1.0f, 0.0f, 0.0f,
+		-1.0f, -1.0f, -1.0f, 1.0f, 0.0f, 0.0f,
+		-1.0f,  1.0f, -1.0f, 1.0f, 0.0f, 0.0f,
+		-1.0f,  1.0f, -1.0f, 1.0f, 0.0f, 0.0f,
+		-1.0f,  1.0f,  1.0f, 1.0f, 0.0f, 0.0f,
+		-1.0f, -1.0f,  1.0f, 1.0f, 0.0f, 0.0f,
 
-		 1.0f, -1.0f, -1.0f,
-		 1.0f, -1.0f,  1.0f,
-		 1.0f,  1.0f,  1.0f,
-		 1.0f,  1.0f,  1.0f,
-		 1.0f,  1.0f, -1.0f,
-		 1.0f, -1.0f, -1.0f,
+		 1.0f, -1.0f, -1.0f, -1.0f, 0.0f, 0.0f,
+		 1.0f, -1.0f,  1.0f, -1.0f, 0.0f, 0.0f,
+		 1.0f,  1.0f,  1.0f, -1.0f, 0.0f, 0.0f,
+		 1.0f,  1.0f,  1.0f, -1.0f, 0.0f, 0.0f,
+		 1.0f,  1.0f, -1.0f, -1.0f, 0.0f, 0.0f,
+		 1.0f, -1.0f, -1.0f, -1.0f, 0.0f, 0.0f,
 
-		-1.0f, -1.0f,  1.0f,
-		-1.0f,  1.0f,  1.0f,
-		 1.0f,  1.0f,  1.0f,
-		 1.0f,  1.0f,  1.0f,
-		 1.0f, -1.0f,  1.0f,
-		-1.0f, -1.0f,  1.0f,
+		-1.0f, -1.0f,  1.0f, 0.0f, 0.0f, -1.0f,
+		-1.0f,  1.0f,  1.0f, 0.0f, 0.0f, -1.0f,
+		 1.0f,  1.0f,  1.0f, 0.0f, 0.0f, -1.0f,
+		 1.0f,  1.0f,  1.0f, 0.0f, 0.0f, -1.0f,
+		 1.0f, -1.0f,  1.0f, 0.0f, 0.0f, -1.0f,
+		-1.0f, -1.0f,  1.0f, 0.0f, 0.0f, -1.0f,
 
-		-1.0f,  1.0f, -1.0f,
-		 1.0f,  1.0f, -1.0f,
-		 1.0f,  1.0f,  1.0f,
-		 1.0f,  1.0f,  1.0f,
-		-1.0f,  1.0f,  1.0f,
-		-1.0f,  1.0f, -1.0f,
+		-1.0f,  1.0f, -1.0f, 0.0f, -1.0f, 0.0f,
+		 1.0f,  1.0f, -1.0f, 0.0f, -1.0f, 0.0f,
+		 1.0f,  1.0f,  1.0f, 0.0f, -1.0f, 0.0f,
+		 1.0f,  1.0f,  1.0f, 0.0f, -1.0f, 0.0f,
+		-1.0f,  1.0f,  1.0f, 0.0f, -1.0f, 0.0f,
+		-1.0f,  1.0f, -1.0f, 0.0f, -1.0f, 0.0f,
 
-		-1.0f, -1.0f, -1.0f,
-		-1.0f, -1.0f,  1.0f,
-		 1.0f, -1.0f, -1.0f,
-		 1.0f, -1.0f, -1.0f,
-		-1.0f, -1.0f,  1.0f,
-		 1.0f, -1.0f,  1.0f
+		-1.0f, -1.0f, -1.0f, 0.0f, 1.0f, 0.0f,
+		-1.0f, -1.0f,  1.0f, 0.0f, 1.0f, 0.0f,
+		 1.0f, -1.0f, -1.0f, 0.0f, 1.0f, 0.0f,
+		 1.0f, -1.0f, -1.0f, 0.0f, 1.0f, 0.0f,
+		-1.0f, -1.0f,  1.0f, 0.0f, 1.0f, 0.0f,
+		 1.0f, -1.0f,  1.0f, 0.0f, 1.0f, 0.0f
 	};
 
 	// skybox VAO
@@ -156,7 +158,21 @@ int main()
 	glBindBuffer(GL_ARRAY_BUFFER, HouseVBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(HouseVertices), &HouseVertices, GL_STATIC_DRAW);
 	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+	// normal attribute
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(1);
+
+
+	// second, configure the light's VAO (VBO stays the same; the vertices are the same for the light object which is also a 3D cube)
+	unsigned int lightVAO;
+	glGenVertexArrays(1, &lightVAO);
+	glBindVertexArray(lightVAO);
+
+	glBindBuffer(GL_ARRAY_BUFFER, HouseVBO);
+	// note that we update the lamp's position attribute's stride to reflect the updated buffer data
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
 
 	// load textures
 	// -------------
@@ -200,7 +216,6 @@ int main()
 
 		// render normal objects
 		glm::mat4 model = glm::mat4(1.0f);
-		model = glm::scale(model, glm::vec3(0.2f));
 		glm::mat4 view = camera.GetViewMatrix();
 		glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
 		
@@ -208,8 +223,12 @@ int main()
 		glDepthFunc(GL_LEQUAL);  // change depth function so depth test passes when values are equal to depth buffer's content
 		HouseShader.use();
 		view = glm::mat4(camera.GetViewMatrix()); // remove translation from the view matrix
+		HouseShader.setMat4("model", model);
 		HouseShader.setMat4("view", view);
 		HouseShader.setMat4("projection", projection);
+		HouseShader.setVec4("lightColor", 1.0f, 1.0f, 1.0f, 1.0f);
+		HouseShader.setVec3("lightPos", lightPos);
+		HouseShader.setVec3("viewPos", camera.Position);
 		
 		// draw floor as normal, but don't write the floor to the stencil buffer, we only care about the containers. 
 		//We set its mask to 0x00 to not write to the stencil buffer.
@@ -227,6 +246,17 @@ int main()
 		glStencilFunc(GL_ALWAYS, 1, 0xFF);
 		glStencilMask(0xFF);
 		
+		// also draw the lamp object
+		/*lampShader.use();
+		lampShader.setMat4("projection", projection);
+		lampShader.setMat4("view", view);
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, lightPos);
+		model = glm::scale(model, glm::vec3(0.2f)); // a smaller cube
+		lampShader.setMat4("model", model);
+
+		glBindVertexArray(lightVAO);
+		glDrawArrays(GL_TRIANGLES, 0, 36);*/
 		// draw all models
 
 		// draw bed model
@@ -241,6 +271,8 @@ int main()
 			model = glm::translate(model, glm::vec3(-0.56f, -0.73f, -0.29f));
 			model = glm::scale(model, glm::vec3(0.4f, 0.4f, 0.4f));
 			ModelShader.setMat4("model", model);
+			ModelShader.setVec4("lightColor", 1.0f, 1.0f, 1.0f, 1.0f);
+			ModelShader.setVec3("lightPos", lightPos);
 			bedModel.Draw(ModelShader);
 		}
 
@@ -258,6 +290,8 @@ int main()
 			model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(1.0, 0.0, 0.0));
 			model = glm::scale(model, glm::vec3(0.0055f, 0.0055f, 0.0055f));
 			ModelShader.setMat4("model", model);
+			ModelShader.setVec4("lightColor", 1.0f, 1.0f, 1.0f, 1.0f);
+			ModelShader.setVec3("lightPos", lightPos);
 			chairModel.Draw(ModelShader);
 		}
 
@@ -273,6 +307,8 @@ int main()
 			model = glm::translate(model, glm::vec3(0.0f, -1.0f, 0.0f));
 			model = glm::scale(model, glm::vec3(0.007f, 0.007f, 0.007f));
 			ModelShader.setMat4("model", model);
+			ModelShader.setVec4("lightColor", 1.0f, 1.0f, 1.0f, 1.0f);
+			ModelShader.setVec3("lightPos", lightPos);
 			girlModel.Draw(ModelShader);
 		}
 
@@ -288,6 +324,8 @@ int main()
 			model = glm::translate(model, glm::vec3(-0.15f, -1.0f, -1.0f));
 			model = glm::scale(model, glm::vec3(0.01f, 0.01f, 0.01f));
 			ModelShader.setMat4("model", model);
+			ModelShader.setVec4("lightColor", 1.0f, 1.0f, 1.0f, 1.0f);
+			ModelShader.setVec3("lightPos", lightPos);
 			bedsideModel.Draw(ModelShader);
 		}
 
@@ -304,6 +342,8 @@ int main()
 			model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0, 1.0, 0.0));
 			model = glm::scale(model, glm::vec3(0.3f, 0.3f, 0.3f));
 			ModelShader.setMat4("model", model);
+			ModelShader.setVec4("lightColor", 1.0f, 1.0f, 1.0f, 1.0f);
+			ModelShader.setVec3("lightPos", lightPos);
 			clockModel.Draw(ModelShader);
 		}
 
@@ -321,6 +361,8 @@ int main()
 			model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0, 1.0, 0.0));
 			model = glm::scale(model, glm::vec3(0.014f, 0.014f, 0.014f));
 			ModelShader.setMat4("model", model);
+			ModelShader.setVec4("lightColor", 1.0f, 1.0f, 1.0f, 1.0f);
+			ModelShader.setVec3("lightPos", lightPos);
 			tableModel.Draw(ModelShader);
 		}
 		
@@ -337,6 +379,8 @@ int main()
 			model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0, 1.0, 0.0));
 			model = glm::scale(model, glm::vec3(0.098f, 0.098f, 0.098f));
 			ModelShader.setMat4("model", model);
+			ModelShader.setVec4("lightColor", 1.0f, 1.0f, 1.0f, 1.0f);
+			ModelShader.setVec3("lightPos", lightPos);
 			doorModel.Draw(ModelShader);
 		}
 
@@ -353,6 +397,8 @@ int main()
 			model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0, 1.0, 0.0));
 			model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
 			ModelShader.setMat4("model", model);
+			ModelShader.setVec4("lightColor", 1.0f, 1.0f, 1.0f, 1.0f);
+			ModelShader.setVec3("lightPos", lightPos);
 			imacModel.Draw(ModelShader);
 		}
 
@@ -369,6 +415,8 @@ int main()
 			model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0, 1.0, 0.0));
 			model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
 			ModelShader.setMat4("model", model);
+			ModelShader.setVec4("lightColor", 1.0f, 1.0f, 1.0f, 1.0f);
+			ModelShader.setVec3("lightPos", lightPos);
 			keyboardModel.Draw(ModelShader);
 		}
 
@@ -385,22 +433,31 @@ int main()
 			model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0, 1.0, 0.0));
 			model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
 			ModelShader.setMat4("model", model);
+			ModelShader.setVec4("lightColor", 1.0f, 1.0f, 1.0f, 1.0f);
+			ModelShader.setVec3("lightPos", lightPos);
 			mouseModel.Draw(ModelShader);
 		}
 
 		// draw light model
 		{
-			ModelShader.use();
+			//ModelShader.use();
+			lampShader.use();
 			glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
 			glm::mat4 view = camera.GetViewMatrix();
-			ModelShader.setMat4("projection", projection);
-			ModelShader.setMat4("view", view);
+			//ModelShader.setMat4("projection", projection);
+			//ModelShader.setMat4("view", view);
+			lampShader.setMat4("projection", projection);
+			lampShader.setMat4("view", view);
 
 			glm::mat4 model = glm::mat4(1.0f);
 			model = glm::translate(model, glm::vec3(0.0f, 0.68f, 0.0f));
 			model = glm::scale(model, glm::vec3(0.002f, 0.002f, 0.002f));
-			ModelShader.setMat4("model", model);
-			lightModel.Draw(ModelShader);
+			//ModelShader.setMat4("model", model);
+			//ModelShader.setVec4("lightColor", 1.0f, 1.0f, 1.0f, 1.0f);
+			//ModelShader.setVec3("lightPos", lightPos);
+			lampShader.setMat4("model", model);
+			//lightModel.Draw(ModelShader);
+			lightModel.Draw(lampShader);
 		}
 
 		// draw lamp model
@@ -415,6 +472,8 @@ int main()
 			model = glm::translate(model, glm::vec3(0.08f, -0.628f, -0.8f));
 			model = glm::scale(model, glm::vec3(0.15f, 0.15f, 0.15f));
 			ModelShader.setMat4("model", model);
+			ModelShader.setVec4("lightColor", 1.0f, 1.0f, 1.0f, 1.0f);
+			ModelShader.setVec3("lightPos", lightPos);
 			lampModel.Draw(ModelShader);
 		}
 
@@ -422,7 +481,7 @@ int main()
 		// Because the stencil buffer is now filled with several 1s. The parts of the buffer that are 1 are not drawn, thus only drawing 
 		// the objects' size differences, making it look like borders.
 		// ------------------------------------------------------------------------------------------------------
-		glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
+		/*glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
 		glStencilMask(0x00);
 		glDisable(GL_DEPTH_TEST);
 
@@ -444,7 +503,7 @@ int main()
 		glBindVertexArray(0);
 
 		glStencilMask(0xFF);
-		glEnable(GL_DEPTH_TEST);
+		glEnable(GL_DEPTH_TEST);*/
 
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 		// -------------------------------------------------------------------------------
