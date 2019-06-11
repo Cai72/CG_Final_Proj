@@ -273,6 +273,7 @@ int main()
 			ModelShader.setMat4("model", model);
 			ModelShader.setVec4("lightColor", 1.0f, 1.0f, 1.0f, 1.0f);
 			ModelShader.setVec3("lightPos", lightPos);
+			HouseShader.setVec3("viewPos", camera.Position);
 			bedModel.Draw(ModelShader);
 		}
 
@@ -292,6 +293,7 @@ int main()
 			ModelShader.setMat4("model", model);
 			ModelShader.setVec4("lightColor", 1.0f, 1.0f, 1.0f, 1.0f);
 			ModelShader.setVec3("lightPos", lightPos);
+			HouseShader.setVec3("viewPos", camera.Position);
 			chairModel.Draw(ModelShader);
 		}
 
@@ -309,6 +311,7 @@ int main()
 			ModelShader.setMat4("model", model);
 			ModelShader.setVec4("lightColor", 1.0f, 1.0f, 1.0f, 1.0f);
 			ModelShader.setVec3("lightPos", lightPos);
+			HouseShader.setVec3("viewPos", camera.Position);
 			girlModel.Draw(ModelShader);
 		}
 
@@ -326,6 +329,7 @@ int main()
 			ModelShader.setMat4("model", model);
 			ModelShader.setVec4("lightColor", 1.0f, 1.0f, 1.0f, 1.0f);
 			ModelShader.setVec3("lightPos", lightPos);
+			HouseShader.setVec3("viewPos", camera.Position);
 			bedsideModel.Draw(ModelShader);
 		}
 
@@ -344,6 +348,7 @@ int main()
 			ModelShader.setMat4("model", model);
 			ModelShader.setVec4("lightColor", 1.0f, 1.0f, 1.0f, 1.0f);
 			ModelShader.setVec3("lightPos", lightPos);
+			HouseShader.setVec3("viewPos", camera.Position);
 			clockModel.Draw(ModelShader);
 		}
 
@@ -363,6 +368,7 @@ int main()
 			ModelShader.setMat4("model", model);
 			ModelShader.setVec4("lightColor", 1.0f, 1.0f, 1.0f, 1.0f);
 			ModelShader.setVec3("lightPos", lightPos);
+			HouseShader.setVec3("viewPos", camera.Position);
 			tableModel.Draw(ModelShader);
 		}
 		
@@ -381,6 +387,7 @@ int main()
 			ModelShader.setMat4("model", model);
 			ModelShader.setVec4("lightColor", 1.0f, 1.0f, 1.0f, 1.0f);
 			ModelShader.setVec3("lightPos", lightPos);
+			HouseShader.setVec3("viewPos", camera.Position);
 			doorModel.Draw(ModelShader);
 		}
 
@@ -399,6 +406,7 @@ int main()
 			ModelShader.setMat4("model", model);
 			ModelShader.setVec4("lightColor", 1.0f, 1.0f, 1.0f, 1.0f);
 			ModelShader.setVec3("lightPos", lightPos);
+			HouseShader.setVec3("viewPos", camera.Position);
 			imacModel.Draw(ModelShader);
 		}
 
@@ -417,6 +425,7 @@ int main()
 			ModelShader.setMat4("model", model);
 			ModelShader.setVec4("lightColor", 1.0f, 1.0f, 1.0f, 1.0f);
 			ModelShader.setVec3("lightPos", lightPos);
+			HouseShader.setVec3("viewPos", camera.Position);
 			keyboardModel.Draw(ModelShader);
 		}
 
@@ -435,6 +444,7 @@ int main()
 			ModelShader.setMat4("model", model);
 			ModelShader.setVec4("lightColor", 1.0f, 1.0f, 1.0f, 1.0f);
 			ModelShader.setVec3("lightPos", lightPos);
+			HouseShader.setVec3("viewPos", camera.Position);
 			mouseModel.Draw(ModelShader);
 		}
 
@@ -474,6 +484,7 @@ int main()
 			ModelShader.setMat4("model", model);
 			ModelShader.setVec4("lightColor", 1.0f, 1.0f, 1.0f, 1.0f);
 			ModelShader.setVec3("lightPos", lightPos);
+			HouseShader.setVec3("viewPos", camera.Position);
 			lampModel.Draw(ModelShader);
 		}
 
