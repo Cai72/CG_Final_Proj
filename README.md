@@ -5,9 +5,10 @@ A repository for muti-develop Final_Proj of Computer Graphics
 
 |Order|Goal|contributor|accept|
 |:----:|:----:|:----:|:----:|
-|1|texture mapping|蔡俊琪|temp|
+|1|texture mapping|蔡俊琪|√|
 |2|Camera Roaming|蔡梓桁|√|
-|3|Simple Light and Shading(Phone)|汤万鹏|no|
+|3|Simple Light and Shading(Phone)|汤万鹏|×|
+|3|Simple Light and Shading(Phone)|蔡俊琪|√|
 |4|Model import & Mesh viewing|蔡梓桁|√|
 |5|Stencil test|肖帅|no|
 |6|Complex Lighting|蔡俊琪|no|
